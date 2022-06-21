@@ -28,12 +28,17 @@ def rectArea(request):
     return response
 
 def rectPerim(request):
-    print('rectangleArea route')
-    height = int(request.GET.get('height'))
-    width = int(request.GET.get('width'))
-    perimeter = (2* height) + (2 * width)
-    response = HttpResponse(f'<h1>The perimeter of a rectangle with height: {height} and width: {width} is {perimeter}</h1>')
-    return response
+    try:
+        print('rectangleArea route')
+        height = int(request.GET.get('height'))
+        width = int(request.GET.get('width'))
+        perimeter = (2* height) + (2 * width)
+        response = HttpResponse(f'<h1>The perimeter of a rectangle with height: {height} and width: {width} is {perimeter}</h1>')
+        return response
+    except:
+        response = HttpResponse()
+        response.status_code = 400
+        return response
 
 def circArea(request):
     radius = int(request.GET.get('radius'))
@@ -43,11 +48,18 @@ def circArea(request):
     return response
 
 def circPerim(request):
-    radius = int(request.GET.get('radius'))
-    # print('radius')
-    perimeter = 2 * math.pi * radius
-    response = HttpResponse(f'<h1>Area of the circle is {perimeter}</h1>')
-    return response
+    try:
+        radius = (request.GET.get('radius'))
+        # print('radius')
+        perimeter = 2 * math.pi * int(radius)
+        response = HttpResponse(f'<h1>Area of the circle is {perimeter}</h1>')
+        if type(int(radius)) != 'int':
+            response.status_code = 418
+        return response
+    except:
+        response = HttpResponse()
+        response.status_code = 400
+        return response
 
 def rectangleArea(request, height, width):
     print('rectangleArea route')
